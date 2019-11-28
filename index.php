@@ -3,34 +3,25 @@
 
 class action {
   public function run(){
-    $get = $_GET['url'];
-    $params = explode('/', $get);
+    $get = filter_input( INPUT_GET, 'url' );
+    $filename = './models/'.$get.'.php';
 
-  //model
-    $model = array_shift($params);
-    require ('./models/'.$model.'.php');
-    $ret = handle($params);
-
-    //view
-    extract($ret);
-    require ('./views/'.$model.'.php');
- }
+        if(isset($get) && file_exists($filename)){
+            $params = explode('/', $get);
+            $model = array_shift($params);
+            require ('./models/'.$model.'.php');
+            $ret = handle($params);
+            extract($ret); //viewに変数をアサイン
+            require ('./views/'.$model.'.php');
+        } else {
+            require ('./models/index.php');
+            $ret = handle();
+            extract($ret); //viewに変数をアサイン
+            require ('./views/index.php');
+        }
+    }
 }
 
 $app = new action();
 $app->run();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
