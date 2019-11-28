@@ -1,8 +1,10 @@
 {
     "autoload": {
         "psr-4": {
-            "Models\\": "models"
-            "Views\\": "views"
+            "App\\Vodels\\": "app/models",
+            "App\\Views\\": "app/views"
         }
     }
 }
+
+
